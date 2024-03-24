@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-	const [cards, setCards] = useState(["lemon", "cherries", "lemon"]);
+	const [cards, setCards] = useState(["lemon", "lemon", "lemon"]);
 	const [credit, setCredit] = useState(0);
 
 	const elements = [
@@ -30,8 +30,8 @@ function App() {
 
 	const isWin = () => {
 		if (cards[0] === cards[1] && cards[1] === cards[2]) {
-			let newCredit = credit + 1000000;
-			setCredit(newCredit);
+			// let newCredit = credit + 1000000;
+			// setCredit(newCredit);
 			return true;
 		}
 		return false;
