@@ -3,19 +3,23 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-	const [cards, setCards] = useState(["lemon", "lemon", "lemon"]);
+	const [cards, setCards] = useState([
+		{ name: "lemon", jackpot: 100 },
+		{ name: "lemon", jackpot: 100 },
+		{ name: "lemon", jackpot: 100 },
+	]);
+
 	const [credit, setCredit] = useState(0);
 
 	const elements = [
-		"cherries",
-		"lemon",
-		"orange",
-		"plum",
-		"seven",
-		"watermelon",
+		{ name: "cherries", jackpot: 150 },
+		{ name: "lemon", jackpot: 100 },
+		{ name: "orange", jackpot: 200 },
+		{ name: "plum", jackpot: 150 },
+		{ name: "seven", jackpot: 100 },
+		{ name: "watermelon", jackpot: 200 },
 	];
 	const handleGenerate = () => {
-		
 		let newCards = [];
 		for (let i = 0; i < 3; i++) {
 			setTimeout(() => {
@@ -25,10 +29,8 @@ function App() {
 				if (i === 0) {
 					setCredit((prevCredit) => prevCredit - 10);
 				}
-			
 			}, 500 * i);
 		}
-		
 	};
 
 	useEffect(() => {
@@ -41,10 +43,12 @@ function App() {
 			setCredit(newCredit);
 		}
 	}, [cards]);
-	
 
 	const isWin = () => {
-		if (cards[0] === cards[1] && cards[1] === cards[2]) {
+		if (
+			cards[0].name === cards[1].name &&
+			cards[1].name === cards[2].name
+		) {
 			// let newCredit = credit + 1000000;
 			// setCredit(newCredit);
 			return true;
@@ -53,11 +57,13 @@ function App() {
 	};
 	const isJackpot = () => {
 		if (
-			cards[0] === cards[1] &&
-			cards[1] === cards[2] &&
-			cards[2] === "seven"
-		)
+			cards[0].name === cards[1].name &&
+			cards[1].name === cards[2].name &&
+			cards[2].name === "seven"
+		) {
 			return true;
+		}
+		console.log(cards[0].name);
 		return false;
 	};
 
@@ -73,7 +79,7 @@ function App() {
 			<div className="machine">
 				{cards.map((e, index) => (
 					<div className="card" key={index}>
-						<img src={`/src/img/${e}.png`} alt="" />
+						<img src={`/src/img/${e.name}.png`} alt="" />
 					</div>
 				))}
 			</div>
