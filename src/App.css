@@ -18,6 +18,7 @@
 
 
 /* animation */
+
 @keyframes cardAnimation {
   0% {
     transform: translateY(-100%);

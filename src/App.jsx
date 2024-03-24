@@ -3,7 +3,9 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-	const [cards, setCards] = useState(["cherries", "lemon", "seven"]);
+	const [cards, setCards] = useState(["lemon", "cherries", "lemon"]);
+	const [credit, setCredit] = useState(0);
+
 	const elements = [
 		"cherries",
 		"lemon",
@@ -19,25 +21,58 @@ function App() {
 				const index = Math.floor(Math.random() * elements.length);
 				newCards.push(elements[index]);
 				setCards([...newCards]);
+				if (i === 0) {
+					setCredit((prevCredit) => prevCredit - 10);
+				}
 			}, 500 * i);
 		}
 	};
 
+	const isWin = () => {
+		if (cards[0] === cards[1] && cards[1] === cards[2]) {
+			let newCredit = credit + 1000000;
+			setCredit(newCredit);
+			return true;
+		}
+		return false;
+	};
+	const isJackpot = () => {
+		if (
+			cards[0] === cards[1] &&
+			cards[1] === cards[2] &&
+			cards[2] === "seven"
+		)
+			return true;
+		return false;
+	};
+
+	const handleIncreace = (number) => {
+		let newCredit = credit + number;
+		setCredit(newCredit);
+	};
+
 	return (
 		<>
-			{cards[0] === cards[1] && cards[1] === cards[2] && <h3>You win</h3>}
-			{cards[0] === cards[1] &&
-				cards[1] === cards[2] &&
-				cards[2] === "seven" && <h3>JACKPOOOOT</h3>}
+			{isWin() && <h3>You win</h3>}
+			{isJackpot() && <h3>JACKPOOOOT</h3>}
 			<div className="machine">
 				{cards.map((e, index) => (
 					<div className="card" key={index}>
 						<img src={`/src/img/${e}.png`} alt="" />
 					</div>
 				))}
-
 			</div>
-				<button onClick={handleGenerate}>Start</button>
+			<button onClick={handleGenerate}>Start</button>
+			<div className="credits">
+				<p>Credits</p>
+				<input type="number" className="output" value={credit} />
+				<p>Ricarica credits</p>
+				<div className="buttons">
+					<button onClick={() => handleIncreace(10)}>+10</button>
+					<button onClick={() => handleIncreace(100)}>+100</button>
+					<button onClick={() => handleIncreace(1000)}>+1000</button>
+				</div>
+			</div>
 		</>
 	);
 }
