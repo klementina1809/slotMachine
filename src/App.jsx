@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./App.css";
 
@@ -15,6 +15,7 @@ function App() {
 		"watermelon",
 	];
 	const handleGenerate = () => {
+		
 		let newCards = [];
 		for (let i = 0; i < 3; i++) {
 			setTimeout(() => {
@@ -24,9 +25,23 @@ function App() {
 				if (i === 0) {
 					setCredit((prevCredit) => prevCredit - 10);
 				}
+			
 			}, 500 * i);
 		}
+		
 	};
+
+	useEffect(() => {
+		if (isWin()) {
+			let newCredit = credit + 100;
+			setCredit(newCredit);
+		}
+		if (isJackpot()) {
+			let newCredit = credit + 1000;
+			setCredit(newCredit);
+		}
+	}, [cards]);
+	
 
 	const isWin = () => {
 		if (cards[0] === cards[1] && cards[1] === cards[2]) {
