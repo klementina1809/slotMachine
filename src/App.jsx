@@ -4,9 +4,9 @@ import "./App.css";
 
 function App() {
 	const [cards, setCards] = useState([
+		{ name: "cherries", jackpot: 150 },
 		{ name: "lemon", jackpot: 100 },
-		{ name: "lemon", jackpot: 100 },
-		{ name: "lemon", jackpot: 100 },
+		{ name: "watermelon", jackpot: 200 },
 	]);
 
 	const [credit, setCredit] = useState(0);
@@ -35,7 +35,7 @@ function App() {
 
 	useEffect(() => {
 		if (isWin()) {
-			let newCredit = credit + 100;
+			let newCredit = credit + cards[0].jackpot;
 			setCredit(newCredit);
 		}
 		if (isJackpot()) {
