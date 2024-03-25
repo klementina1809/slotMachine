@@ -9,15 +9,16 @@ function App() {
 		{ name: "watermelon", jackpot: 200 },
 	]);
 
-	const [credit, setCredit] = useState(0);
+	const [credit, setCredit] = useState(100);
+	const [bet, setBet] = useState(10);
 
 	const elements = [
-		{ name: "cherries", jackpot: 150 },
-		{ name: "lemon", jackpot: 100 },
-		{ name: "orange", jackpot: 200 },
-		{ name: "plum", jackpot: 150 },
-		{ name: "seven", jackpot: 100 },
-		{ name: "watermelon", jackpot: 200 },
+		{ name: "cherries", jackpot: 15 },
+		{ name: "lemon", jackpot: 10 },
+		{ name: "orange", jackpot: 20 },
+		{ name: "plum", jackpot: 15 },
+		{ name: "seven", jackpot: 10 },
+		{ name: "watermelon", jackpot: 20 },
 	];
 	const handleGenerate = () => {
 		let newCards = [];
@@ -27,19 +28,20 @@ function App() {
 				newCards.push(elements[index]);
 				setCards([...newCards]);
 				if (i === 0) {
-					setCredit((prevCredit) => prevCredit - 10);
+					setCredit((prevCredit) => prevCredit - bet);
 				}
 			}, 500 * i);
 		}
 	};
 
 	useEffect(() => {
+		console.log(credit);
 		if (isWin()) {
-			let newCredit = credit + cards[0].jackpot;
+			let newCredit = credit + (cards[0].jackpot)*bet;
 			setCredit(newCredit);
 		}
 		if (isJackpot()) {
-			let newCredit = credit + 1000;
+			let newCredit = credit + bet*100;
 			setCredit(newCredit);
 		}
 	}, [cards]);
@@ -68,6 +70,10 @@ function App() {
 		let newCredit = credit + number;
 		setCredit(newCredit);
 	};
+	const handleChangeBet = (e) => {
+		const newBet = e.target.value;
+		setBet(newBet);
+	};
 
 	return (
 		<>
@@ -81,6 +87,10 @@ function App() {
 				))}
 			</div>
 			<button onClick={handleGenerate}>Start</button>
+			<div className="bet">
+				<p>Scomettere</p>
+				<input type="number" className="output" value={bet} onChange={(e) => handleChangeBet(e)} />
+			</div>
 			<div className="credits">
 				<p>Credits</p>
 				<input type="number" className="output" value={credit} />
