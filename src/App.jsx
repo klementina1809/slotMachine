@@ -46,24 +46,21 @@ function App() {
 
 	const isWin = () => {
 		if (
-			cards[0].name === cards[1].name &&
-			cards[1].name === cards[2].name
-		) {
-			// let newCredit = credit + 1000000;
-			// setCredit(newCredit);
+			cards[0]?.name === cards[1]?.name &&
+			cards[1]?.name === cards[2]?.name
+		)
 			return true;
-		}
+
 		return false;
 	};
 	const isJackpot = () => {
 		if (
-			cards[0].name === cards[1].name &&
-			cards[1].name === cards[2].name &&
-			cards[2].name === "seven"
+			cards[0]?.name === cards[1]?.name &&
+			cards[1]?.name === cards[2]?.name &&
+			cards[2]?.name === "seven"
 		) {
 			return true;
 		}
-		console.log(cards[0].name);
 		return false;
 	};
 
