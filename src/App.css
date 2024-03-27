@@ -1,33 +1,69 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
 }
 
-.machine{
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
- 
+p {
+	font-size: 20px;
+	margin-bottom: 8px;
+}
+input {
+	height: 36px;
 }
 
-.card img{
-  width: 80px;
+.money {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 50px;
+}
+.machine {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin-bottom: 20px;
+	height: 320px;
+}
+/* .line {
+	display: flex;
+	justify-content: center;
+  flex-direction: column;
+	gap: 20px;
+	margin-bottom: 20px;
+} */
+
+.card img {
+	width: 50px;
 }
 
+.win-card{
+	width: 100px !important;
+}
+
+.chips {
+	margin: 20px 0;
+	display: flex;
+	justify-content: space-evenly;
+}
+.chips img {
+	width: 50px;
+}
 
 /* animation */
 
 @keyframes cardAnimation {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0);
-  }
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(0);
+	}
 }
 
 .card {
-  animation: cardAnimation 0.5s ease;
+	width: 100px;
+	animation: cardAnimation 0.05s ease;
 }
