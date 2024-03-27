@@ -37,22 +37,22 @@ function App() {
 	};
 
 	const handleGenerate = () => {
-    setLoading(true);
-    setWin(0);
-    setIsWin(false);
-    setIsJackpot(false);
-    setCredit((prevCredit) => prevCredit - bet);
-    let newCards = [];
-    for (let i = 0; i < 9; i++) {
-        setTimeout(() => {
-            newCards.push(randomIcon());
-            setCards([...newCards]);
-            if (i === 8) {
-                setLoading(false);
-            }
-        }, 50 * i);
-    }
-};
+		setLoading(true);
+		setWin(0);
+		setIsWin(false);
+		setIsJackpot(false);
+		setCredit((prevCredit) => prevCredit - bet);
+		let newCards = [];
+		for (let i = 0; i < 9; i++) {
+			setTimeout(() => {
+				newCards.push(randomIcon());
+				setCards([...newCards]);
+				if (i === 8) {
+					setLoading(false);
+				}
+			}, 50 * i);
+		}
+	};
 
 	// const handleGenerate = () => {
 	// 	setWin(0);
@@ -149,35 +149,49 @@ function App() {
 
 			<div className="bet-box">
 				<p>Bet</p>
-				<input type="number" className="output" value={bet} />
-				<button
-					onClick={handleGenerate}
-					type="button"
-					className="btn btn-danger"
-				>
+				<div className="bet-container">
+					<input type="number" className="output" value={bet} />
+					<button
+						onClick={handleGenerate}
+						type="button"
+						className="btn btn-danger"
+					>
 					Spin!
 				</button>
+				</div>
 				<div className="chips">
-					<img
-						src="src/img/10.png"
-						onClick={() => handleIncreace(10)}
-						alt=""
-					/>
-					<img
-						src="src/img/50.png"
-						onClick={() => handleIncreace(50)}
-						alt=""
-					/>
-					<img
-						src="src/img/100.png"
-						onClick={() => handleIncreace(100)}
-						alt=""
-					/>
-					<img
-						src="src/img/1000.png"
-						onClick={() => handleIncreace(1000)}
-						alt=""
-					/>
+					<div className="chip">
+						<img
+							src="src/img/10.png"
+							alt=""
+							onClick={() => handleIncreace(10)}
+						/>
+						<span className="chip-value">10</span>
+					</div>
+					<div className="chip">
+						<img
+							src="src/img/50.png"
+							alt=""
+							onClick={() => handleIncreace(50)}
+						/>
+						<span className="chip-value">50</span>
+					</div>
+					<div className="chip">
+						<img
+							src="src/img/100.png"
+							alt=""
+							onClick={() => handleIncreace(100)}
+						/>
+						<span className="chip-value">100</span>
+					</div>
+					<div className="chip">
+						<img
+							src="src/img/1000.png"
+							alt=""
+							onClick={() => handleIncreace(1000)}
+						/>
+						<span className="chip-value">1000</span>
+					</div>
 				</div>
 			</div>
 		</>

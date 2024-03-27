@@ -8,9 +8,12 @@
 p {
 	font-size: 20px;
 	margin-bottom: 8px;
+	text-align: start;
 }
 input {
+	pointer-events: none !important;
 	height: 36px;
+	padding-left: 12px;
 }
 
 .money {
@@ -21,9 +24,10 @@ input {
 .machine {
 	display: flex;
 	justify-content: center;
+	align-content: space-between;
 	flex-direction: column;
 	flex-wrap: wrap;
-	gap: 20px;
+	gap: 26px;
 	margin-bottom: 20px;
 	height: 320px;
 }
@@ -35,6 +39,10 @@ input {
 	margin-bottom: 20px;
 } */
 
+.card {
+	width: 100px;
+	animation: cardAnimation 0.05s ease;
+}
 .card img {
 	width: 50px;
 }
@@ -43,14 +51,44 @@ input {
 	width: 100px !important;
 }
 
+.bet-container {
+display: flex;
+gap: 20px;
+}
+.bet-container button{
+flex: 1;
+background-color: rgba(165, 42, 42, 0.762);
+font-size: 20px;
+padding: 0px;
+}
+
 .chips {
-	margin: 20px 0;
+	margin: 30px 0;
 	display: flex;
+	gap: 20px;
 	justify-content: space-evenly;
 }
-.chips img {
-	width: 50px;
+
+.chip {
+	position: relative;
 }
+
+.chip img {
+	display: block;
+	width: 80px; 
+	height: auto; 
+}
+
+.chip-value {
+	pointer-events: none !important;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 18px;
+	color: rgb(15, 15, 15);
+}
+
 
 /* animation */
 
@@ -63,7 +101,3 @@ input {
 	}
 }
 
-.card {
-	width: 100px;
-	animation: cardAnimation 0.05s ease;
-}
