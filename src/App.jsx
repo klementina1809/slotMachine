@@ -7,13 +7,13 @@ import "./App.css";
 function App() {
 	const [cards, setCards] = useState([
 		{ name: "cherries", jackpot: 15, prob: 20 },
-		{ name: "lemon", jackpot: 10, prob: 30 },
+		{ name: "plum", jackpot: 15, prob: 20 },
 		{ name: "orange", jackpot: 20, prob: 15 },
 		{ name: "plum", jackpot: 15, prob: 20 },
 		{ name: "lemon", jackpot: 10, prob: 30 },
 		{ name: "watermelon", jackpot: 20, prob: 10 },
 		{ name: "plum", jackpot: 15, prob: 20 },
-		{ name: "lemon", jackpot: 10, prob: 30 },
+		{ name: "cherries", jackpot: 15, prob: 20 },
 		{ name: "watermelon", jackpot: 20, prob: 10 },
 	]);
 
