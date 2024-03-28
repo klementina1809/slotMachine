@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import Confetti from './Confetti';
+import Confetti from "./Confetti";
+import SmallConfetti from "./SmallConfetti";
 
 import "./App.css";
 
@@ -47,12 +48,7 @@ function App() {
 			setWin(0);
 			setIsWin(false);
 			setIsJackpot(false);
-			if (credit - bet === 0) {
-				setCredit(1000);
-			} else {
-				setCredit((prevCredit) => prevCredit - bet);
-			}
-
+			setCredit((prevCredit) => prevCredit - bet);
 			let newCards = [];
 			for (let i = 0; i < 9; i++) {
 				setTimeout(() => {
@@ -111,7 +107,7 @@ function App() {
 
 	return (
 		<>
-			{isWin && <Confetti />}
+			{isWin && <SmallConfetti />}
 			{isJackpot && <Confetti />}
 			<div className="money">
 				<div className="credits">
@@ -160,9 +156,6 @@ function App() {
 					{credit - bet < 0 && (
 						<span>You can't play, decrease the bet amount</span>
 					)}
-					{credit === 1000 && (
-						<span>We're giving you 1000 credits</span>
-					)}
 				</div>
 				<div className="bet-container">
 					<input type="number" className="output" value={bet} />
@@ -181,11 +174,11 @@ function App() {
 					</div>
 					<div className="chip">
 						<img
-							src="src/img/25.png"
+							src="src/img/20.png"
 							alt=""
-							onClick={() => setBet(25)}
+							onClick={() => setBet(20)}
 						/>
-						<span className="chip-value">25</span>
+						<span className="chip-value">20</span>
 					</div>
 					<div className="chip">
 						<img
