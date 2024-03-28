@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
+import Confetti from './Confetti';
 
 import "./App.css";
 
 function App() {
 	const [cards, setCards] = useState([
-		{ name: "cherries", jackpot: 15 },
-		{ name: "cherries", jackpot: 15 },
-		{ name: "orange", jackpot: 20 },
-		{ name: "plum", jackpot: 15 },
-		{ name: "seven", jackpot: 100 },
-		{ name: "watermelon", jackpot: 20 },
-		{ name: "plum", jackpot: 15 },
-		{ name: "seven", jackpot: 100 },
-		{ name: "watermelon", jackpot: 20 },
+		{ name: "cherries", jackpot: 15, prob: 20 },
+		{ name: "lemon", jackpot: 10, prob: 30 },
+		{ name: "orange", jackpot: 20, prob: 15 },
+		{ name: "plum", jackpot: 15, prob: 20 },
+		{ name: "lemon", jackpot: 10, prob: 30 },
+		{ name: "watermelon", jackpot: 20, prob: 10 },
+		{ name: "plum", jackpot: 15, prob: 20 },
+		{ name: "lemon", jackpot: 10, prob: 30 },
+		{ name: "watermelon", jackpot: 20, prob: 10 },
 	]);
 
 	const [credit, setCredit] = useState(1000);
@@ -23,17 +24,21 @@ function App() {
 	const [isJackpot, setIsJackpot] = useState(false);
 
 	const elements = [
-		{ name: "cherries", jackpot: 15 },
-		{ name: "lemon", jackpot: 10 },
-		{ name: "orange", jackpot: 20 },
-		{ name: "plum", jackpot: 15 },
-		{ name: "seven", jackpot: 100 },
-		{ name: "watermelon", jackpot: 20 },
+		{ name: "cherries", jackpot: 15, prob: 20 },
+		{ name: "lemon", jackpot: 10, prob: 30 },
+		{ name: "orange", jackpot: 20, prob: 15 },
+		{ name: "plum", jackpot: 15, prob: 20 },
+		{ name: "seven", jackpot: 100, prob: 5 },
+		{ name: "watermelon", jackpot: 20, prob: 10 },
 	];
 
 	const randomIcon = () => {
-		const index = Math.floor(Math.random() * elements.length);
-		return elements[index];
+		const random = Math.floor(Math.random() * 100);
+		let count = 0;
+		for (let i = 0; i < elements.length; i++) {
+			count += elements[i].prob;
+			if (random <= count) return elements[i];
+		}
 	};
 
 	const handleGenerate = () => {
@@ -104,15 +109,10 @@ function App() {
 		}
 	}, [loading]);
 
-	// const handleIncreace = (number) => {
-	// 	let newBet = bet + number;
-	// 	setBet(newBet);
-	// };
-
 	return (
 		<>
-			{isWin && <h3>You win</h3>}
-			{isJackpot && <h3>JACKPOOOOT</h3>}
+			{isWin && <Confetti />}
+			{isJackpot && <Confetti />}
 			<div className="money">
 				<div className="credits">
 					<p>Credits</p>
@@ -181,6 +181,14 @@ function App() {
 					</div>
 					<div className="chip">
 						<img
+							src="src/img/25.png"
+							alt=""
+							onClick={() => setBet(25)}
+						/>
+						<span className="chip-value">25</span>
+					</div>
+					<div className="chip">
+						<img
 							src="src/img/50.png"
 							alt=""
 							onClick={() => setBet(50)}
@@ -194,14 +202,6 @@ function App() {
 							onClick={() => setBet(100)}
 						/>
 						<span className="chip-value">100</span>
-					</div>
-					<div className="chip">
-						<img
-							src="src/img/1000.png"
-							alt=""
-							onClick={() => setBet(1000)}
-						/>
-						<span className="chip-value">1000</span>
 					</div>
 				</div>
 				{bet === 0 && (
