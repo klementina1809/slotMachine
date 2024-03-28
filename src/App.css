@@ -47,19 +47,30 @@ input {
 	width: 50px;
 }
 
-.win-card{
+.win-card {
 	width: 100px !important;
 }
 
 .bet-container {
-display: flex;
-gap: 20px;
+	display: flex;
+	gap: 20px;
 }
-.bet-container button{
-flex: 1;
-background-color: rgba(165, 42, 42, 0.762);
-font-size: 20px;
-padding: 0px;
+
+.bet-container button {
+	flex: 1;
+	background-color: rgba(165, 42, 42, 0.762);
+	font-size: 20px;
+	padding: 0px;
+}
+
+.bet-label-container {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+	margin-bottom: 16px;
+}
+.bet {
+	font-size: 20px;
 }
 
 .chips {
@@ -75,8 +86,8 @@ padding: 0px;
 
 .chip img {
 	display: block;
-	width: 80px; 
-	height: auto; 
+	width: 80px;
+	height: auto;
 }
 
 .chip-value {
@@ -89,7 +100,6 @@ padding: 0px;
 	color: rgb(15, 15, 15);
 }
 
-
 /* animation */
 
 @keyframes cardAnimation {
@@ -100,4 +110,3 @@ padding: 0px;
 		transform: translateY(0);
 	}
 }
-

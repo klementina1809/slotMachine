@@ -5,7 +5,7 @@ import "./App.css";
 function App() {
 	const [cards, setCards] = useState([
 		{ name: "cherries", jackpot: 15 },
-		{ name: "seven", jackpot: 100 },
+		{ name: "cherries", jackpot: 15 },
 		{ name: "orange", jackpot: 20 },
 		{ name: "plum", jackpot: 15 },
 		{ name: "seven", jackpot: 100 },
@@ -37,20 +37,27 @@ function App() {
 	};
 
 	const handleGenerate = () => {
-		setLoading(true);
-		setWin(0);
-		setIsWin(false);
-		setIsJackpot(false);
-		setCredit((prevCredit) => prevCredit - bet);
-		let newCards = [];
-		for (let i = 0; i < 9; i++) {
-			setTimeout(() => {
-				newCards.push(randomIcon());
-				setCards([...newCards]);
-				if (i === 8) {
-					setLoading(false);
-				}
-			}, 50 * i);
+		if (credit - bet >= 0) {
+			setLoading(true);
+			setWin(0);
+			setIsWin(false);
+			setIsJackpot(false);
+			if (credit - bet === 0) {
+				setCredit(1000);
+			} else {
+				setCredit((prevCredit) => prevCredit - bet);
+			}
+
+			let newCards = [];
+			for (let i = 0; i < 9; i++) {
+				setTimeout(() => {
+					newCards.push(randomIcon());
+					setCards([...newCards]);
+					if (i === 8) {
+						setLoading(false);
+					}
+				}, 50 * i);
+			}
 		}
 	};
 
@@ -97,10 +104,10 @@ function App() {
 		}
 	}, [loading]);
 
-	const handleIncreace = (number) => {
-		let newBet = bet + number;
-		setBet(newBet);
-	};
+	// const handleIncreace = (number) => {
+	// 	let newBet = bet + number;
+	// 	setBet(newBet);
+	// };
 
 	return (
 		<>
@@ -148,23 +155,27 @@ function App() {
 			</div>
 
 			<div className="bet-box">
-				<p>Bet</p>
+				<div className="bet-label-container">
+					<span className="bet">Bet</span>
+					{credit - bet < 0 && (
+						<span>You can't play, decrease the bet amount</span>
+					)}
+					{credit === 1000 && (
+						<span>We're giving you 1000 credits</span>
+					)}
+				</div>
 				<div className="bet-container">
 					<input type="number" className="output" value={bet} />
-					<button
-						onClick={handleGenerate}
-						type="button"
-						className="btn btn-danger"
-					>
-					Spin!
-				</button>
+					<button onClick={handleGenerate} type="button">
+						Spin!
+					</button>
 				</div>
 				<div className="chips">
 					<div className="chip">
 						<img
 							src="src/img/10.png"
 							alt=""
-							onClick={() => handleIncreace(10)}
+							onClick={() => setBet(10)}
 						/>
 						<span className="chip-value">10</span>
 					</div>
@@ -172,7 +183,7 @@ function App() {
 						<img
 							src="src/img/50.png"
 							alt=""
-							onClick={() => handleIncreace(50)}
+							onClick={() => setBet(50)}
 						/>
 						<span className="chip-value">50</span>
 					</div>
@@ -180,7 +191,7 @@ function App() {
 						<img
 							src="src/img/100.png"
 							alt=""
-							onClick={() => handleIncreace(100)}
+							onClick={() => setBet(100)}
 						/>
 						<span className="chip-value">100</span>
 					</div>
@@ -188,11 +199,14 @@ function App() {
 						<img
 							src="src/img/1000.png"
 							alt=""
-							onClick={() => handleIncreace(1000)}
+							onClick={() => setBet(1000)}
 						/>
 						<span className="chip-value">1000</span>
 					</div>
 				</div>
+				{bet === 0 && (
+					<p>You can't spin the reel if the bet is equal to 0.</p>
+				)}
 			</div>
 		</>
 	);
