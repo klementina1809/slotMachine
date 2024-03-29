@@ -1,37 +1,74 @@
 import { useState, useEffect } from "react";
-import Confetti from "./Confetti";
-import SmallConfetti from "./SmallConfetti";
+import Confetti from "./components/Confetti";
+import SmallConfetti from "./components/SmallConfetti";
 
 import "./App.css";
 
 function App() {
-	const [cards, setCards] = useState([
-		{ name: "cherries", jackpot: 15, prob: 20 },
-		{ name: "plum", jackpot: 15, prob: 20 },
-		{ name: "orange", jackpot: 20, prob: 15 },
-		{ name: "plum", jackpot: 15, prob: 20 },
-		{ name: "lemon", jackpot: 10, prob: 30 },
-		{ name: "watermelon", jackpot: 20, prob: 10 },
-		{ name: "plum", jackpot: 15, prob: 20 },
-		{ name: "cherries", jackpot: 15, prob: 20 },
-		{ name: "watermelon", jackpot: 20, prob: 10 },
-	]);
+	const [cards, setCards] = useState([]);
 
 	const [credit, setCredit] = useState(1000);
 	const [win, setWin] = useState(0);
 	const [bet, setBet] = useState(10);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [isWin, setIsWin] = useState(false);
 	const [isJackpot, setIsJackpot] = useState(false);
 
+	useEffect(() => {
+		setRandomCards();
+	}, []);
+
+	useEffect(() => {
+		if (!loading) {
+			let userWon =
+				cards[1]?.name === cards[4]?.name && cards[4]?.name === cards[7]?.name;
+			if (userWon) {
+				if (cards[1]?.name === "seven") {
+					setIsJackpot(true);
+				}
+				setIsWin(true);
+				let newCredit = credit + cards[1].jackpot * bet;
+				setCredit(newCredit);
+				setWin(cards[1].jackpot * bet);
+			} else {
+				setWin(0);
+				setIsWin(false);
+				setIsJackpot(false);
+			}
+		}
+	}, [loading]);
+
 	const elements = [
-		{ name: "cherries", jackpot: 15, prob: 20 },
-		{ name: "lemon", jackpot: 10, prob: 30 },
-		{ name: "orange", jackpot: 20, prob: 15 },
-		{ name: "plum", jackpot: 15, prob: 20 },
-		{ name: "seven", jackpot: 100, prob: 5 },
-		{ name: "watermelon", jackpot: 20, prob: 10 },
+		{
+			name: "cherries",
+			img: "./img/cherries.png",
+			jackpot: 15,
+			prob: 20,
+		},
+		{ name: "lemon", img: "./img/lemon.png", jackpot: 10, prob: 30 },
+		{ name: "orange", img: "./img/orange.png", jackpot: 20, prob: 15 },
+		{ name: "plum", img: "./img/plum.png", jackpot: 15, prob: 20 },
+		{ name: "seven", img: "./img/seven.png", jackpot: 100, prob: 5 },
+		{
+			name: "watermelon",
+			img: "./img/watermelon.png",
+			jackpot: 20,
+			prob: 10,
+		},
 	];
+
+	const setRandomCards = () => {
+		let newCards = [];
+		for (let i = 0; i < 9; i++) {
+			setTimeout(() => {
+				newCards.push(randomIcon());
+				setCards([...newCards]);
+				if (i === 8) {
+					setLoading(false);
+				}
+			}, 50 * i);
+		}
+	};
 
 	const randomIcon = () => {
 		const random = Math.floor(Math.random() * 100);
@@ -45,162 +82,70 @@ function App() {
 	const handleGenerate = () => {
 		if (credit - bet >= 0) {
 			setLoading(true);
-			setWin(0);
-			setIsWin(false);
-			setIsJackpot(false);
 			setCredit((prevCredit) => prevCredit - bet);
-			let newCards = [];
-			for (let i = 0; i < 9; i++) {
-				setTimeout(() => {
-					newCards.push(randomIcon());
-					setCards([...newCards]);
-					if (i === 8) {
-						setLoading(false);
-					}
-				}, 50 * i);
-			}
+			setRandomCards();
 		}
 	};
-
-	// const handleGenerate = () => {
-	// 	setWin(0);
-	// 	setIsWin(false);
-	// 	setIsJackpot(false);
-	// 	let newCards = [];
-	// 	for (let i = 0; i < 3; i++) {
-	// 		setTimeout(() => {
-	// 			const index = Math.floor(Math.random() * elements.length);
-	// 			newCards.push(elements[index]);
-	// 			setCards([...newCards]);
-	// 			if (i === 0) {
-	// 				setCredit((prevCredit) => prevCredit - bet);
-	// 			}
-	// 		}, 500 * i);
-	// 	}
-	// };
-
-	useEffect(() => {
-		console.log(credit);
-		if (!loading) {
-			if (
-				cards[1]?.name === cards[4]?.name &&
-				cards[4]?.name === cards[7]?.name
-			) {
-				setIsWin(true);
-				console.log("cards", cards);
-				let newCredit = credit + cards[1].jackpot * bet;
-				setCredit(newCredit);
-				setWin(cards[1].jackpot * bet);
-			}
-			if (
-				cards[1]?.name === cards[4]?.name &&
-				cards[4]?.name === cards[7]?.name &&
-				cards[7]?.name === "seven"
-			) {
-				setIsJackpot(true);
-				let newCredit = credit + bet * 100;
-				setCredit(newCredit);
-				setWin(cards[1].jackpot * bet);
-			}
-		}
-	}, [loading]);
 
 	return (
 		<>
 			{isWin && <SmallConfetti />}
 			{isJackpot && <Confetti />}
-			<div className="money">
-				<div className="credits">
-					<p>Credits</p>
-					<input type="number" className="output" value={credit} />
+			<div className="row-container">
+				<div className="input-container">
+					<span>Credits</span>
+					<input type="number" value={credit} readOnly />
 				</div>
-				<div className="win">
-					<p>Win</p>
-					<input type="number" className="output" value={win} />
+				<div className="input-container">
+					<span>Win</span>
+					<input type="number" value={win} readOnly />
 				</div>
 			</div>
 			<div className="machine">
-				{cards.map((e, index) => (
+				{cards.map((card, index) => (
 					<div className="card" key={index}>
 						<img
-							src={`/src/img/${e.name}.png`}
+							src={card.img}
 							alt=""
 							className={
 								index === 1 || index === 4 || index === 7
 									? "win-card"
-									: ""
+									: "other-card"
 							}
 						/>
 					</div>
 				))}
-
-				{/* <div className="line">
-					{cards.map((e, index) => (
-						<div className="card" key={index}>
-							<img src={`/src/img/${e.name}.png`} alt="" />
-						</div>
-					))}
-				</div>
-				<div className="line">
-					{cards.map((e, index) => (
-						<div className="card" key={index}>
-							<img src={`/src/img/${e.name}.png`} alt="" />
-						</div>
-					))}
-				</div> */}
 			</div>
 
-			<div className="bet-box">
-				<div className="bet-label-container">
-					<span className="bet">Bet</span>
+			<div className="row-container">
+				<div className="input-container">
+					<span>Bet</span>
 					{credit - bet < 0 && (
 						<span>You can't play, decrease the bet amount</span>
 					)}
+					<input type="number" value={bet} readOnly />
 				</div>
-				<div className="bet-container">
-					<input type="number" className="output" value={bet} />
-					<button onClick={handleGenerate} type="button">
-						Spin!
-					</button>
-				</div>
-				<div className="chips">
-					<div className="chip">
-						<img
-							src="src/img/10.png"
-							alt=""
-							onClick={() => setBet(10)}
-						/>
-						<span className="chip-value">10</span>
-					</div>
-					<div className="chip">
-						<img
-							src="src/img/20.png"
-							alt=""
-							onClick={() => setBet(20)}
-						/>
-						<span className="chip-value">20</span>
-					</div>
-					<div className="chip">
-						<img
-							src="src/img/50.png"
-							alt=""
-							onClick={() => setBet(50)}
-						/>
-						<span className="chip-value">50</span>
-					</div>
-					<div className="chip">
-						<img
-							src="src/img/100.png"
-							alt=""
-							onClick={() => setBet(100)}
-						/>
-						<span className="chip-value">100</span>
-					</div>
-				</div>
-				{bet === 0 && (
-					<p>You can't spin the reel if the bet is equal to 0.</p>
-				)}
+				<button onClick={handleGenerate} type="button" className="btn-primary">
+					Spin!
+				</button>
 			</div>
+
+			<div className="chips">
+				<div className="chip" data-value="10">
+					<img src="./img/10.png" alt="" onClick={() => setBet(10)} />
+				</div>
+				<div className="chip" data-value="20">
+					<img src="./img/20.png" alt="" onClick={() => setBet(20)} />
+				</div>
+				<div className="chip" data-value="50">
+					<img src="./img/50.png" alt="" onClick={() => setBet(50)} />
+				</div>
+				<div className="chip" data-value="100">
+					<img src="./img/100.png" alt="" onClick={() => setBet(100)} />
+				</div>
+			</div>
+
+			{bet === 0 && <p>You can't spin the reel if the bet is equal to 0.</p>}
 		</>
 	);
 }
