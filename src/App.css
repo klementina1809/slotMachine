@@ -43,6 +43,7 @@ input {
 
 .chip {
 	position: relative;
+	cursor: pointer;
 }
 
 .chip::after {
@@ -54,6 +55,7 @@ input {
 	font-size: 18px;
 	color: rgb(15, 15, 15);
 	font-weight: 700;
+	pointer-events: none !important;
 }
 
 .chip img {

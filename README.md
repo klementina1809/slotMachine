@@ -1,8 +1,29 @@
-# React + Vite
+# Slot Machine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### About:
+This project is an emulation of a slot machine, featuring various elements with individual probabilities of appearing. Players aim for wins by aligning three identical fruits in a row, with an additional opportunity for a super win by landing three sevens in a row. With the ability to place bets and potentially win rewards, users can enjoy the excitement of playing a classic slot machine game.
 
-Currently, two official plugins are available:
+### Demo:
+<a href="https://klementina1809.github.io/slotMachine/">
+<img src="public/img/preview.png" alt="preview" />
+</a>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Technologies Used:
+![Static Badge](https://img.shields.io/badge/React-ffffff?style=social&logo=React)
+![Static Badge](https://img.shields.io/badge/HTML5-ffffff?style=social&logo=HTML5)
+![Static Badge](https://img.shields.io/badge/CSS3-ffffff?style=social&logo=CSS3)
+![Static Badge](https://img.shields.io/badge/JavaScript-ffffff?style=social&logo=JavaScript)
+![Static Badge](https://img.shields.io/badge/npm-ffffff?style=social&logo=npm)
+
+
+### Packages Used:
+- [Canvas Confetti](https://www.npmjs.com/package/canvas-confetti)
+
+
+### Other Links:
+
+- [Icons](https://www.flaticon.com/search?word=slot)
+
+
+
+
